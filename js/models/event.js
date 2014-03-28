@@ -1,4 +1,4 @@
-/*global Todos, DS */
+/*global Calendar, DS */
 'use strict';
 
 Calendar.Event = DS.Model.extend({
