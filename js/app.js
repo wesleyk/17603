@@ -1,6 +1,13 @@
-/*global Ember, DS, Todos:true */
-window.Calendar = Ember.Application.create();
+/*global Ember, DS */
+window.App = Ember.Application.create();
 
-Calendar.ApplicationAdapter = DS.FirebaseAdapter.extend({
-	firebase: new Firebase("https://shining-fire-2692.firebaseio.com/")
+var dbRoot = "https://shining-fire-2692.firebaseio.com/";
+var dbRef = new Firebase(dbRoot);
+
+var usersPath = dbRef + "/users";
+var eventsPath = dbRef + "/events";
+
+App.ApplicationAdapter = DS.FirebaseAdapter.extend({
+	firebase: dbRef
 });
+

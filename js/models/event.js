@@ -1,6 +1,5 @@
-/*global Calendar, DS */
-'use strict';
-
-Calendar.Event = DS.Model.extend({
-	title: DS.attr('string'),
+App.Event = DS.Model.extend({
+	name: DS.attr('string'),
+	user: DS.attr('string'),
 });
+
