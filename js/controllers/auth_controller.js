@@ -8,19 +8,26 @@ App.AuthController = Ember.Controller.extend({
         console.log('Authentication failed: ' + error);
       } else if (user) {
         console.log('Authentication succeeded');
+        console.log(user);
 
         this.set('authed', true);
-        var userRef = new Firebase(usersPath + '/' + user.id);
-        var controller = this;
-        var properties = {
-          id: user.id,
-          email: user.email,
-        };
-        userRef.once('value', function(snapshot) {
-          var user = App.User.create({ ref: userRef });
-          user.setProperties(properties);
-          controller.set('currentUser', user);
+
+        // Find existing user or create new user
+        var store = this.get('store');
+
+        persistedUser = this.store.find('user', user.id).then(function(user) {
+          return user;
+        }, function() {
+          delete store.typeMapFor(App.User).idToRecord[user.id];
+          var newUser = store.createRecord('user', {
+            id: user.id,
+            email: user.email,
+          });
+          newUser.save();
+          return newUser;
         });
+        this.set('currentUser', persistedUser);
+        console.log(this.currentUser);
       } else {
         this.set('authed', false);
       }
@@ -29,10 +36,7 @@ App.AuthController = Ember.Controller.extend({
 
   actions: {
     createUser: function() {
-      console.log('hi');
-      console.log(this.get('newEmail'));
-      console.log(this.get('newPassword'));
-      this.authClient.createUser(this.get('newEmail'), this.get('newPassword'), function(error, user) {
+      this.authClient.createUser(this.get('new_email'), this.get('new_password'), function(error, user) {
         if (!error) {
           console.log('User Id: ' + user.id + ', Email: ' + user.email);
         }

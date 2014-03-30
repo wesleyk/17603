@@ -9,22 +9,12 @@
 		<script type="text/x-handlebars" data-template-name="auth">
       <form {{action login on="submit"}}>
           <div>
-              <p>{{input type="text" valueBinding="email"}}</p>
+              <p>Email: {{input type="text" valueBinding="email"}}</p>
           </div>
           <div>
-              <p>{{input type="password" valueBinding="password"}}</p>
+              <p>Password: {{input type="password" valueBinding="password"}}</p>
           </div>
           <button>login</button>
-      <form>
-
-      <form {{action createUser on="submit"}}>
-          <div>
-              <p>{{input type="text" valueBinding="newEmail"}}</p>
-          </div>
-          <div>
-              <p>{{input type="password" valueBinding="newPassword"}}</p>
-          </div>
-          <button>signup</button>
       <form>
     </script>
 
