@@ -3,6 +3,7 @@ App.AuthController = Ember.Controller.extend({
   currentUser: null,
 
   init: function() {
+    var self = this;
     this.authClient = new FirebaseSimpleLogin(dbRef, function(error, user) {
       if (error) {
         console.log('Authentication failed: ' + error);
@@ -28,6 +29,9 @@ App.AuthController = Ember.Controller.extend({
         });
         this.set('currentUser', persistedUser);
         console.log(this.currentUser);
+
+        // TODO(wesley): Redirect to main calendar page
+        self.transitionToRoute('login');
       } else {
         this.set('authed', false);
       }
@@ -36,9 +40,17 @@ App.AuthController = Ember.Controller.extend({
 
   actions: {
     createUser: function() {
+      var self = this;
       this.authClient.createUser(this.get('new_email'), this.get('new_password'), function(error, user) {
         if (!error) {
           console.log('User Id: ' + user.id + ', Email: ' + user.email);
+          self.authClient.login('password', {
+            email: self.get('new_email'),
+            password: self.get('new_password'),
+            rememberMe: true
+          });
+        } else {
+          console.log('Failed to create user with error: ' + error);
         }
       });
     },
