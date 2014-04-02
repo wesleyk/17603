@@ -1,5 +1,5 @@
 App.Router.map(function () {
-	this.resource('auth', { path: '/' });
+	this.resource('login', { path: '/' });
 	this.resource('register', { path: '/register' });
 });
 
