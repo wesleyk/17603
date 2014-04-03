@@ -46,14 +46,18 @@ App.AuthController = Ember.Controller.extend({
         if (!error) {
           console.log('User Id: ' + user.id + ', Email: ' + user.email);
 
+		  self.set('errors', error);
           // Log user in once they've registered
           self.authClient.login('password', {
             email: self.get('new_email'),
             password: self.get('new_password'),
             rememberMe: true
           });
+		  self.set('new_email', '');
+		  self.set('new_password', '');
         } else {
           // TODO: Show user failure message
+		  self.set('errors', error.message.replace("FirebaseSimpleLogin: ","").replace("FirebaseSimpleLogin: ",""));
           console.log('Failed to create user with error: ' + error);
         }
       });
