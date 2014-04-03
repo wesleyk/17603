@@ -32,6 +32,7 @@
         <div>
           <p>Password: {{input type="password" valueBinding="new_password"}}</p>
         </div>
+          {{#if errors}}<p>{{errors}}</p>{{/if}}
         <button>register</button>
       </form>
     </script>
