@@ -3,4 +3,3 @@ App.AuthRoute = Ember.Route.extend({
     return {};
   }
 });
-
