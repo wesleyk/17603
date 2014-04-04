@@ -18,7 +18,8 @@ App.AuthController = Ember.Controller.extend({
         var store = this.get('store');
 
         persistedUser = this.store.find('user', user.id).then(function(user) {
-          return user;
+          self.set('currentUser', user);
+          console.log(user);
         }, function() {
           delete store.typeMapFor(App.User).idToRecord[user.id];
           var newUser = store.createRecord('user', {
@@ -26,13 +27,11 @@ App.AuthController = Ember.Controller.extend({
             email: user.email,
           });
           newUser.save();
-          return newUser;
+          self.set('currentUser', newUser);
+          console.log(newUser);
         });
-        this.set('currentUser', persistedUser);
-        console.log(this.currentUser);
 
-        // TODO(wesley): Redirect to main calendar page
-        self.transitionToRoute('login');
+        self.transitionToRoute('calendar');
       } else {
         this.set('authed', false);
       }
