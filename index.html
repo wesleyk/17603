@@ -38,10 +38,10 @@
     </script>
     <script type="text/x-handlebars" data-template-name="event/edit">
         <div class="event-edit">
-            <p>Choose event type {{view Ember.Select content=eventTypes valueBinding="new_type"}}</p>
-            <p>Event date {{input type="date" valueBinding="new_date"}}</p>
-            <p>Event start time {{input type="time" valueBinding="new_time"}}</p>
-            <p>Event place {{input type="text" valueBinding="new_place"}}</p>
+            <p>Choose event type {{view Ember.Select content=eventTypes valueBinding="type"}}</p>
+            <p>Event date {{input type="date" valueBinding="date"}}</p>
+            <p>Event start time {{input type="time" valueBinding="time"}}</p>
+            <p>Event place {{input type="text" valueBinding="place"}}</p>
         </div>
         <button {{action "save"}}> OK </button>
     </script>
