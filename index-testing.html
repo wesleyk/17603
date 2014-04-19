@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" data-framework="emberjs">
+  <head>
+    <meta charset="utf-8">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.14.0.css"> 
+    <script src="http://code.jquery.com/qunit/qunit-1.14.0.js"></script>
+  </head>
+  <body>
+
+    <div id="qunit"></div>
+    <div id="ember-testing"></div>
+
+    <script type="text/x-handlebars" data-template-name="login">
+      <form {{action login on="submit"}}>
+        <div>
+          <p class="title">Login:</p>
+        </div>
+        <div>
+            <p>Email: {{input type="text" valueBinding="email"}}</p>
+        </div>
+        <div>
+            <p>Password: {{input type="password" valueBinding="password"}}</p>
+        </div>
+        <button>login</button>
+      </form>
+      <p>{{#link-to 'register'}}register{{/link-to}}</p>
+    </script>
+    <script type="text/x-handlebars" data-template-name="register">
+      <form {{action createUser on="submit"}}>
+        <div>
+          <p class="title">Register:</p>
+        </div>
+        <div>
+          <p>Email: {{input type="text" valueBinding="new_email"}}</p>
+        </div>
+        <div>
+          <p>Password: {{input type="password" valueBinding="new_password"}}</p>
+        </div>
+          {{#if errors}}<p>{{errors}}</p>{{/if}}
+        <button>register</button>
+      </form>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="calendar">
+      <p>Hello, world!</p>
+    </script>
+
+    <script src="https://cdn.firebase.com/js/client/1.0.6/firebase.js"></script>
+    <script src='https://cdn.firebase.com/js/simple-login/1.3.0/firebase-simple-login.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"></script>
+    <script src="http://builds.emberjs.com.s3.amazonaws.com/beta/daily/20140325/ember.js"></script>
+    <script src="http://builds.emberjs.com.s3.amazonaws.com/beta/daily/20140219/ember-data.js"></script>
+    <script src="js/emberfire.min.js"></script>
+    <script src="js/app-testing.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/controllers/auth_controller.js"></script>
+    <script src="js/models/event.js"></script>
+    <script src="js/models/user.js"></script>
+    <script src="js/routes/auth_route.js"></script>
+    <script src="js/routes/login_route.js"></script>
+    <script src="js/routes/register_route.js"></script>
+  </body>
+</html>
