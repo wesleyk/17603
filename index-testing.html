@@ -28,18 +28,18 @@
       <p>{{#link-to 'register'}}register{{/link-to}}</p>
     </script>
     <script type="text/x-handlebars" data-template-name="register">
-      <form {{action createUser on="submit"}}>
+      <form id="registrationForm" {{action createUser on="submit"}}>
         <div>
           <p class="title">Register:</p>
         </div>
         <div>
-          <p>Email: {{input type="text" valueBinding="new_email"}}</p>
+          <p>Email: {{input type="text" id="new_email" valueBinding="new_email"}}</p>
         </div>
         <div>
-          <p>Password: {{input type="password" valueBinding="new_password"}}</p>
+          <p>Password: {{input type="password" id="new_password" valueBinding="new_password"}}</p>
         </div>
           {{#if errors}}<p>{{errors}}</p>{{/if}}
-        <button>register</button>
+        <button id="registerBtn">register</button>
       </form>
     </script>
 
