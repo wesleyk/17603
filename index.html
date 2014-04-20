@@ -36,9 +36,46 @@
         <button>register</button>
       </form>
     </script>
-
+    <script type="text/x-handlebars" data-template-name="event/edit">
+        <div class="event-edit">
+            <p>Choose event type {{view Ember.Select content=eventTypes valueBinding="type"}}</p>
+            <p>Event date {{input type="date" valueBinding="date"}}</p>
+            <p>Event start time {{input type="time" valueBinding="time"}}</p>
+            <p>Event place {{input type="text" valueBinding="place"}}</p>
+        </div>
+        <button {{action "save"}}> OK </button>
+    </script>
     <script type="text/x-handlebars" data-template-name="calendar">
       <p>Hello, world!</p>
+    </script>
+    <script type="text/x-handlebars" data-template-name="events">
+        <ul class="events-listing">
+            {{#each event in controller}}
+            <li>
+                {{#link-to "event" event}}
+                {{event.date}}
+                {{/link-to}}
+            </li>
+            {{/each}}
+            {{#link-to "events.create" class="create-btn"}} Add event {{/link-to}}
+            {{outlet}}
+        </ul>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="event">
+        <div class="event-profile">
+            {{type}} in {{place}}
+            {{outlet}}
+        </div>
+        <button {{action "edit"}}>Edit</button>
+        <button {{action "delete"}}>Delete</button>
+        {{#if deleteMode}}
+        <div class="confirm-box">
+            <h4>Really?</h4>
+            <button {{action "confirmDelete"}}> yes </button>
+            <button {{action "cancelDelete"}}> no </button>
+        </div>
+        {{/if}}
     </script>
 
     <script src="https://cdn.firebase.com/js/client/1.0.6/firebase.js"></script>
@@ -51,10 +88,17 @@
     <script src="js/app.js"></script>
     <script src="js/router.js"></script>
     <script src="js/controllers/auth_controller.js"></script>
+    <script src="js/controllers/events_controller.js"></script>
+    <script src="js/controllers/event_edit_controller.js"></script>
+    <script src="js/controllers/event_controller.js"></script>
+    <script src="js/controllers/events_create_controller.js"></script>
     <script src="js/models/event.js"></script>
     <script src="js/models/user.js"></script>
     <script src="js/routes/auth_route.js"></script>
     <script src="js/routes/login_route.js"></script>
     <script src="js/routes/register_route.js"></script>
-  </body>
-</html>
+    <script src="js/routes/events_route.js"></script>
+    <script src="js/routes/calendar_route.js"></script>
+    <script src="js/routes/event_edit_route.js"></script>
+    <script src="js/routes/event_route.js"></script>
+    <script src="js/routes/events_create_route.js"></script>
