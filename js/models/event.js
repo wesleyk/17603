@@ -1,5 +1,8 @@
 App.Event = DS.Model.extend({
-	name: DS.attr('string'),
-	user: DS.attr('string'),
+    type: DS.attr('string'),
+    date: DS.attr('date'),
+    time: DS.attr('string'),
+    place: DS.attr('string'),
+    user: DS.attr('number')
 });
 
