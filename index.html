@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <script type="text/x-handlebars" data-template-name="login">
+        <script type="text/x-handlebars" data-template-name="login">
       <form {{action login on="submit"}}>
         <div>
-          <p>Login:</p>
+          <p class="title">Login:</p>
         </div>
         <div>
             <p>Email: {{input type="text" valueBinding="email"}}</p>
@@ -22,25 +22,24 @@
       <p>{{#link-to 'register'}}register{{/link-to}}</p>
     </script>
     <script type="text/x-handlebars" data-template-name="register">
-      <form {{action createUser on="submit"}}>
+      <form id="registrationForm" {{action createUser on="submit"}}>
         <div>
-          <p>Register:</p>
+          <p class="title">Register:</p>
         </div>
         <div>
-          <p>Email: {{input type="text" valueBinding="new_email"}}</p>
+          <p>Email: {{input type="text" id="new_email" valueBinding="new_email"}}</p>
         </div>
         <div>
-          <p>Password: {{input type="password" valueBinding="new_password"}}</p>
+          <p>Password: {{input type="password" id="new_password" valueBinding="new_password"}}</p>
         </div>
           {{#if errors}}<p>{{errors}}</p>{{/if}}
-        <button>register</button>
+        <button id="registerBtn">register</button>
       </form>
     </script>
 
     <script type="text/x-handlebars" data-template-name="calendar">
       <p>Hello, world!</p>
     </script>
-
     <script src="https://cdn.firebase.com/js/client/1.0.6/firebase.js"></script>
     <script src='https://cdn.firebase.com/js/simple-login/1.3.0/firebase-simple-login.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
