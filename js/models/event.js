@@ -3,6 +3,7 @@ App.Event = DS.Model.extend({
     date: DS.attr(''),
     time: DS.attr(''),
     place: DS.attr(''),
-    user: DS.attr('')
+    user: DS.attr(''),
+	remind: DS.attr('')
 });
 
