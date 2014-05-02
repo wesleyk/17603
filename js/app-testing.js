@@ -180,6 +180,15 @@ test('Add Event', function() {
   });
 });
 
+test('Change Event Type', function() {
+    App.reset();
+
+    visit('/events/create').then(function() {
+        $("#event-type").val("Sporting Event");
+        ok(find("Sporting Event"));
+    });
+});
+
 test('Add Different Event', function() {
   App.reset();
   
