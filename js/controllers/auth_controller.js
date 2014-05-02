@@ -32,7 +32,7 @@ App.AuthController = Ember.Controller.extend({
           console.log(newUser);
         });
 
-        self.transitionToRoute('calendar');
+        self.transitionToRoute('events');
       } else {
         this.set('authed', false);
       }
