@@ -8,7 +8,7 @@ App.ApplicationAdapter = DS.FirebaseAdapter.extend({
   firebase: dbRef
 });
 
-/*=================== TESTS ====================*/
+/*=================== BASIC TESTS ====================*/
 
 App.setupForTesting();
 App.injectTestHelpers();
@@ -21,19 +21,42 @@ module('Integration tests', {
 });
 
 test('hello world', function(){
+  App.reset();
   equal(1, 1, 'Sample test');
 });
 
+/*=================== LOGIN TESTS ====================*/
+
+test('visit login... multiple assertions', function() {
+    App.reset();
+    visit('/').then(function() {
+        ok(find("Email"));
+        ok(find("Password"));
+    });
+});
+
 test('visit home page', function(){
-  visit('/');
-  andThen(function() {
+  App.reset();
+  visit('/')
+  .then(function() {
     equal(find('.title').text(), 'Login:', 'Login page should appear');
+  });
+});
+
+test('Login', function(){
+  App.reset();
+  visit('/');
+  fillIn("#email", "test@test.com");
+  fillIn("#password", "test");
+  click("#loginBtn");
+  andThen(function() {
+    ok(find("Calendar"));
   });
 });
 
 /*=================== REGISTRATION TESTS ====================*/
 
-test('LoadPage', function() {
+test('LoadRegisterPage', function() {
   App.reset();
   visit("/register").then(function() {
     ok(find("Register"));
@@ -60,7 +83,7 @@ test('EmptyPassword', function() {
     return click("#registerBtn");
   });
   andThen(function() {
-	ok(find(""));
+	ok(find("Invalid password specified"));
   });
 });
 
@@ -81,22 +104,103 @@ test('Register', function() {
 test('AlreadyUsedUsername', function() {
   App.reset();
   //Add test user
-  visit("/register");
-  andThen(function() {
+  visit("/register").then(function() {
 	fillIn("#new_email", "test@test.com");
 	fillIn("#new_password", "password");
     return click("#registerBtn");
-  });
+  })
+  .then(function() {
   
-  //Try to add test user again
-  visit("/register");
-  andThen(function() {
-	fillIn("#new_email", "test@test.com");
-	fillIn("#new_password", "password");
-    return click("#registerBtn");
-  });
-  andThen(function() {
-	ok(find("The specified email address is already in use"));
+    //Try to add test user again
+    visit("/register").then(function() {
+	  fillIn("#new_email", "test@test.com");
+	  fillIn("#new_password", "password");
+      return click("#registerBtn");
+    }).then(function() {
+	  ok(find("The specified email address is already in use"));
+    });
   });
 });
 
+/*=================== EVENTS TESTS ====================*/
+
+test('Add Event Button Not Logged In', function() {
+  App.reset();
+  visit("/events").then(function() {
+      click("#add_event");
+      andThen(function() {
+          ok(find("Choose event type"));
+          ok(find("Event date"));
+          ok(find("Event start"));
+          ok(find("Event place"));
+          ok(find("Remind?"));
+          ok(find("Ok"));
+      });
+  });
+});
+
+test('Add Event Button Not Logged In', function() {
+  App.reset();
+  
+  visit('/').then(function() {
+    fillIn("#email", "test@test.com");
+    fillIn("#password", "test");
+    click("#loginBtn");
+    andThen(function() {
+      click("#events-link").then(function() {
+          ok(find("Choose event type"));
+          ok(find("Event date"));
+          ok(find("Event start"));
+          ok(find("Event place"));
+          ok(find("Remind?"));
+          ok(find("Ok"));
+      });
+    });
+  });
+});
+
+test('Add Event', function() {
+  App.reset();
+  
+  visit('/').then(function() {
+    fillIn("#email", "test@test.com");
+    fillIn("#password", "test");
+    click("#loginBtn");
+    andThen(function() {
+      click("#events-link").then(function() {
+        fillIn("#event-date", "2015-12-25");
+        // Times are 24-hour clock
+        fillIn("#event-time", "12:30");
+        fillIn("#event-place", "CMU");
+        click("#save-event").then(function() {
+            ok(find("2015-12-25"));
+        });
+      });
+    });
+  });
+});
+
+test('Add Event and Remind', function() {
+  App.reset();
+  
+  visit('/').then(function() {
+    fillIn("#email", "test@test.com");
+    fillIn("#password", "test");
+    click("#loginBtn");
+    andThen(function() {
+      click("#events-link").then(function() {
+        fillIn("#event-date", "2015-12-25");
+        // Times are 24-hour clock
+        fillIn("#event-time", "12:30");
+        fillIn("#event-place", "CMU");
+        cllick("#event-remind");
+        click("#save-event").then(function() {
+            ok(find("2015-12-25"));
+            visit("/reminders").then(function() {
+              ok(find("2015-12-25"));
+            });
+        });
+      });
+    });
+  });
+});
