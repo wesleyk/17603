@@ -198,7 +198,7 @@ test('Add Different Event', function() {
     click("#loginBtn");
     andThen(function() {
       click("#events-link").then(function() {
-	    $(dropdown).val("Sporting Event");
+	    $(event-type).val("Sporting Event");
         fillIn("#event-date", "2015-12-25");
         // Times are 24-hour clock
         fillIn("#event-time", "12:30");
@@ -309,7 +309,7 @@ test('Delete Event', function() {
           click("#2015-12-25").then(function() {
 		    click("#delete-btn").then(function() {
 			  click("#confirm-delete-btn").then(function() {
-			    ok(!find("#2015-12-25");
+			    ok(!find("#2015-12-25"));
 			  });
 			});
 	      });
