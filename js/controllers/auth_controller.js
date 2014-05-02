@@ -1,4 +1,5 @@
 App.AuthController = Ember.Controller.extend({
+  needs: ['auth'],
   authed: false,
   currentUser: null,
 
