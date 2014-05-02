@@ -111,8 +111,8 @@
             {{#each event in controller}}
             <li>
                 {{#link-to "event" event}}
-                {{event.date}} {{event.remind}}
-                {{/link-to}}
+                {{event.type}} at {{event.place}}
+                {{/link-to}} is in 	{{event.days_left}} days
             </li>
             {{/each}}
         </ul>
