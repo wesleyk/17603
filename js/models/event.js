@@ -4,6 +4,7 @@ App.Event = DS.Model.extend({
 	time: DS.attr(''),
 	place: DS.attr(''),
 	user: DS.attr(''),
-	remind: DS.attr('')
+	remind: DS.attr(''),
+	reminder_interval: DS.attr('')
 });
 
