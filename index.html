@@ -86,24 +86,36 @@
 			<p>Remind? {{input type="checkbox" valueBinding="remind" checked=remind name="remind"}}</p>
 			<p>Reminder {{input type="number" valueBinding="reminder_interval"}} days</p>
         </div>
-        <button {{action "save"}}> OK </button>
+        <button class="btn btn-success"{{action "save"}}> OK </button>
     </script>
     <script type="text/x-handlebars" data-template-name="calendar">
       {{partial "navbar"}}
       <p>Hello, world!</p>
     </script>
     <script type="text/x-handlebars" data-template-name="events">
-        <ul class="events-listing">
-            {{#each event in controller}}
-            <li>
-                {{#link-to "event" event}}
-                {{event.date}}
-                {{/link-to}}
-            </li>
-            {{/each}}
-            {{#link-to "events.create" class="create-btn"}} Add event {{/link-to}}
-            {{outlet}}
-        </ul>
+      {{partial "navbar"}}
+
+      <div class="page-header">
+        <h1>Events</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <ul class="list-group">
+              {{#each event in controller}}
+              <li class="list-group-item">
+                  {{#link-to "event" event}}
+                  {{event.date}}
+                  {{/link-to}}
+              </li>
+              {{/each}}
+              <br/>
+              {{#link-to 'events.create'}}<button type="submit" class="btn btn-primary">Add Event</button>{{/link-to}}
+          </ul>
+        </div>
+        <div class="col-sm-6">
+           {{outlet}}
+        </div>
+      </div>
     </script>
 	
     <script type="text/x-handlebars" data-template-name="reminder">
@@ -119,16 +131,17 @@
     </script>	
     <script type="text/x-handlebars" data-template-name="event">
         <div class="event-profile">
-            {{type}} in {{place}}
+            <h2>{{type}} in {{place}}</h2>
             {{outlet}}
         </div>
-        <button {{action "edit"}}>Edit</button>
-        <button {{action "delete"}}>Delete</button>
+        <br/>
+        <button class="btn btn-default" {{action "edit"}}>Edit</button>
+        <button class="btn btn-danger" {{action "delete"}}>Delete</button>
         {{#if deleteMode}}
         <div class="confirm-box">
             <h4>Really?</h4>
-            <button {{action "confirmDelete"}}> yes </button>
-            <button {{action "cancelDelete"}}> no </button>
+            <button class="btn btn-default" {{action "cancelDelete"}}>Cancel</button>
+            <button class="btn btn-danger" {{action "confirmDelete"}}>Delete</button>
         </div>
         {{/if}}
     </script>
