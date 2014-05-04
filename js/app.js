@@ -8,5 +8,3 @@ App.ApplicationAdapter = DS.FirebaseAdapter.extend({
 	firebase: dbRef
 });
 
-//App.ApplicationAdapter = DS.FixtureAdapter;
-

@@ -2,6 +2,7 @@
  * Created by Sasha on 4/7/2014.
  */
 App.EventController = Ember.ObjectController.extend({
+    needs: ['auth'],
     // the deleteMode property is false by default
     deleteMode: false,
 

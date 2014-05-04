@@ -3,7 +3,7 @@ App.Router.map(function () {
 	this.resource('register', { path: '/register' });
 	this.resource('calendar', { path: '/calendar' });
 	this.resource('reminder', { path: '/reminders'});
-    this.resource('events', function(){
+	this.resource('events', function(){
         this.resource('event', { path:'/:event_id' }, function(){
             this.route('edit');
         });

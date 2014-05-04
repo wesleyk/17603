@@ -13,7 +13,9 @@ App.EventsCreateController = Ember.ObjectController.extend({
 					time: this.get("time"),
 					place: this.get("place"),
 					remind: this.get("remind"),
-					user: this.get('auth.currentUser.id')});
+					user: this.get('auth.currentUser.id'),
+					reminder_interval: this.get("reminder_interval")
+			});
             console.log(newEvent);
             newEvent.save();
             // redirects to the user itself

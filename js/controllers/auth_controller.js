@@ -1,4 +1,5 @@
 App.AuthController = Ember.Controller.extend({
+  needs: ['auth'],
   authed: false,
   currentUser: null,
 
@@ -33,7 +34,6 @@ App.AuthController = Ember.Controller.extend({
           });
 		});
 
-//        self.transitionToRoute('calendar');
         self.transitionToRoute('events');
       } else {
         this.set('authed', false);
