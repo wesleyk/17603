@@ -32,7 +32,8 @@
               {{#if controllers.auth.currentUser.email}}
                 <p class="navbar-text navbar-right">
                   Hello, {{controllers.auth.currentUser.email}}!
-                </p>
+              </p>
+              <button class="btn pull-right" {{action logout target="controllers.auth"}}>Logout</button>
               {{else}}
                 <form class="navbar-form navbar-right" role="form" {{action login on="submit"}}>
                   <div class="form-group">

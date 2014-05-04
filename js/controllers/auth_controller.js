@@ -75,7 +75,10 @@ App.AuthController = Ember.Controller.extend({
     },
 
     logout: function() {
+      console.log("logout from auth controller");
       this.authClient.logout();
+      this.set('currentUser', null);
+      this.transitionToRoute('/');
     }
   }
 });
