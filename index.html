@@ -30,10 +30,10 @@
           </div>
             <div class="navbar-collapse collapse">
               {{#if controllers.auth.currentUser.email}}
-                <p class="navbar-text navbar-right">
+                <div class="navbar-text navbar-right">
                   Hello, {{controllers.auth.currentUser.email}}!
-              </p>
-              <button class="btn pull-right" {{action logout target="controllers.auth"}}>Logout</button>
+                  <button class="btn btn-success" {{action logout target="controllers.auth"}}>Logout</button>
+                </div>
               {{else}}
                 <form class="navbar-form navbar-right" role="form" {{action login on="submit"}}>
                   <div class="form-group">
