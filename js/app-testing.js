@@ -39,7 +39,7 @@ test('visit home page', function(){
   App.reset();
   visit('/')
   .then(function() {
-    equal(find('.title').text(), 'Login:', 'Login page should appear');
+    equal(find('.h1').text(), 'Project Calendar', 'Login page should appear');
   });
 });
 
@@ -127,13 +127,13 @@ test('AlreadyUsedUsername', function() {
 test('Add Event Button Not Logged In', function() {
   App.reset();
   visit("/events").then(function() {
-      click("#add_event");
+      click("#add-event");
       andThen(function() {
           ok(find("Choose event type"));
           ok(find("Event date"));
           ok(find("Event start"));
           ok(find("Event place"));
-          ok(find("Remind?"));
+          ok(find("Remind"));
           ok(find("Ok"));
       });
   });
@@ -145,15 +145,14 @@ test('Add Event Button Logged In', function() {
   visit('/').then(function() {
     fillIn("#email", "test@test.com");
     fillIn("#password", "test");
-    click("#loginBtn");
-    andThen(function() {
-      click("#events-link").then(function() {
-          ok(find("Choose event type"));
-          ok(find("Event date"));
-          ok(find("Event start"));
-          ok(find("Event place"));
-          ok(find("Remind?"));
-          ok(find("Ok"));
+    click("#loginBtn").then(function() {
+      click("#add-event").then(function() {
+        ok(find("Choose event type"));
+        ok(find("Event date"));
+        ok(find("Event start"));
+        ok(find("Event place"));
+        ok(find("Remind"));
+        ok(find("Ok"));
       });
     });
   });
@@ -167,7 +166,7 @@ test('Add Event', function() {
     fillIn("#password", "test");
     click("#loginBtn");
     andThen(function() {
-      click("#events-link").then(function() {
+      click("#add-event").then(function() {
         fillIn("#event-date", "2015-12-25");
         // Times are 24-hour clock
         fillIn("#event-time", "12:30");
@@ -197,7 +196,7 @@ test('Add Different Event', function() {
     fillIn("#password", "test");
     click("#loginBtn");
     andThen(function() {
-      click("#events-link").then(function() {
+      click("#add-event").then(function() {
 	    $(event-type).val("Sporting Event");
         fillIn("#event-date", "2015-12-25");
         // Times are 24-hour clock
@@ -221,7 +220,7 @@ test('Add Event and Remind', function() {
     fillIn("#password", "test");
     click("#loginBtn");
     andThen(function() {
-      click("#events-link").then(function() {
+      click("#add-event").then(function() {
         fillIn("#event-date", "2015-12-25");
         // Times are 24-hour clock
         fillIn("#event-time", "12:30");
@@ -246,7 +245,7 @@ test('Add Incomplete Event', function() {
     fillIn("#password", "test");
     click("#loginBtn");
     andThen(function() {
-      click("#events-link").then(function() {
+      click("#add-event").then(function() {
         fillIn("#event-date", "2015-12-25");
         // Times are 24-hour clock
         click("#save-event").then(function() {
@@ -254,7 +253,7 @@ test('Add Incomplete Event', function() {
             ok(find("Event date"));
             ok(find("Event start"));
             ok(find("Event place"));
-            ok(find("Remind?"));
+            ok(find("Remind"));
             ok(find("Ok"));
         });
       });
@@ -270,7 +269,7 @@ test('Edit Event', function() {
     fillIn("#password", "test");
     click("#loginBtn");
     andThen(function() {
-      click("#events-link").then(function() {
+      click("#add-event").then(function() {
         fillIn("#event-date", "2015-12-25");
         // Times are 24-hour clock
         fillIn("#event-time", "12:30");
@@ -282,7 +281,7 @@ test('Edit Event', function() {
               ok(find("Event date"));
               ok(find("Event start"));
               ok(find("Event place"));
-              ok(find("Remind?"));
+              ok(find("Remind"));
               ok(find("Ok"));
 			});
 	      });
@@ -300,7 +299,7 @@ test('Delete Event', function() {
     fillIn("#password", "test");
     click("#loginBtn");
     andThen(function() {
-      click("#events-link").then(function() {
+      click("#add-event").then(function() {
         fillIn("#event-date", "2015-12-25");
         // Times are 24-hour clock
         fillIn("#event-time", "12:30");
