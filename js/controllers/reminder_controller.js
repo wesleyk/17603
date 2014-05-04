@@ -1,4 +1,5 @@
 App.ReminderController = Ember.ArrayController.extend({
-	sortProperties: ['date'],
-	sortAscending: true
+  needs: ['auth'],
+  sortProperties: ['date'],
+  sortAscending: true
 });
