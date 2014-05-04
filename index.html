@@ -79,7 +79,7 @@
     </script>
     <script type="text/x-handlebars" data-template-name="event/edit">
         <div class="event-edit">
-            <p>Choose event type {{view Ember.Select content=eventTypes valueBinding="type"}}</p>
+            <p>Choose event type {{view Ember.Select content=eventTypes id="dropdown" valueBinding="type"}}</p>
             <p>Event date {{input type="date" valueBinding="date"}}</p>
             <p>Event start time {{input type="time" valueBinding="time"}}</p>
             <p>Event place {{input type="text" valueBinding="place"}}</p>

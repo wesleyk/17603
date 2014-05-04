@@ -4,63 +4,184 @@
     <meta charset="utf-8">
     <title>Calendar</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.14.0.css"> 
-    <script src="http://code.jquery.com/qunit/qunit-1.14.0.js"></script>
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/examples/jumbotron/jumbotron.css" rel="stylesheet">
+
+    <style type="text/css"></style>
+	
+	<script src="http://code.jquery.com/qunit/qunit-1.14.0.js"></script>
+
   </head>
   <body>
-
-    <div id="qunit"></div>
+  
+	<div id="qunit"></div>
     <div id="ember-testing"></div>
 
-    <script type="text/x-handlebars" data-template-name="login">
-      <form {{action login on="submit"}}>
-        <div>
-          <p class="title">Login:</p>
-        </div>
-        <div>
-            <p>Email: {{input type="text" valueBinding="email"}}</p>
-        </div>
-        <div>
-            <p>Password: {{input type="password" valueBinding="password"}}</p>
-        </div>
-        <button>login</button>
-      </form>
-      <p>{{#link-to 'register'}}register{{/link-to}}</p>
-    </script>
-    <script type="text/x-handlebars" data-template-name="register">
-      <form id="registrationForm" {{action createUser on="submit"}}>
-        <div>
-          <p class="title">Register:</p>
-        </div>
-        <div>
-          <p>Email: {{input type="text" id="new_email" valueBinding="new_email"}}</p>
-        </div>
-        <div>
-          <p>Password: {{input type="password" id="new_password" valueBinding="new_password"}}</p>
-        </div>
-          {{#if errors}}<p>{{errors}}</p>{{/if}}
-        <button id="registerBtn">register</button>
-      </form>
+   <script type="text/x-handlebars" data-template-name="navbar">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">17-603 Calendar</a>
+          </div>
+            <div class="navbar-collapse collapse">
+              {{#if controllers.auth.currentUser.email}}
+                <p class="navbar-text navbar-right">
+                  Hello, {{controllers.auth.currentUser.email}}!
+                </p>
+              {{else}}
+                <form class="navbar-form navbar-right" role="form" {{action login on="submit"}}>
+                  <div class="form-group">
+                    {{input type="text" placeholder="Email" class="form-control" id="email"
+                    valueBinding="email"}}
+                  </div>
+                  <div class="form-group">
+                    {{input type="password" placeholder="Password" class="form-control" id="password"
+                    valueBinding="password"}}
+                  </div>
+                  <button type="submit" class="btn btn-success" id="loginBtn">Sign in</button>
+                  {{#link-to 'register'}}<button type="submit" class="btn btn-success">Register</button>{{/link-to}}
+                </form>
+              {{/if}}
+            </div>
+          </div>
+      </div>
     </script>
 
+    <script type="text/x-handlebars" data-template-name="login">
+      {{partial "navbar"}}
+      <div class="jumbotron">
+        <div class="container">
+          <h1>Project Calendar</h1>
+          <p>Please sign in above to view your calendar, or click 'Register' to
+          create an account!</p>
+        </div>
+      </div>
+    </script>
+
+
+    <script type="text/x-handlebars" data-template-name="register">
+      {{partial "navbar"}}
+      <div class="container">
+        <form class="form-register" role="form" {{action createUser on="submit"}}>
+          <h2 class="form-signin-heading">Please register</h2>
+          {{input type="email" class="form-control" placeholder="Email address" id="new_email"
+              valueBinding="new_email"}}
+          {{input type="password" class="form-control" placeholder="Password" id="new_password"
+              valueBinding="new_password"}}
+          <button class="btn btn-lg btn-primary btn-block" type="submit" id="registerBtn">Register</button>
+        </form>
+      </div>
+    </script>
+    <script type="text/x-handlebars" data-template-name="event/edit">
+        <div class="event-edit">
+            <p>Choose event type {{view Ember.Select content=eventTypes id="event-type" valueBinding="type"}}</p>
+            <p>Event date {{input type="date" id="event-date" valueBinding="date"}}</p>
+            <p>Event start time {{input type="time" id="event-time" valueBinding="time"}}</p>
+            <p>Event place {{input type="text" id="event-place" valueBinding="place"}}</p>
+			<p>Remind? {{input type="checkbox" id="event-remind" valueBinding="remind" checked=remind name="remind"}}</p>
+			<p>Reminder {{input type="number" id="event-remind-interval" valueBinding="reminder_interval"}} days</p>
+        </div>
+        <button class="btn btn-success"{{action "save"}} id="save-event"> OK </button>
+    </script>
     <script type="text/x-handlebars" data-template-name="calendar">
+      {{partial "navbar"}}
       <p>Hello, world!</p>
     </script>
+    <script type="text/x-handlebars" data-template-name="events">
+      {{partial "navbar"}}
 
-    <script src="https://cdn.firebase.com/js/client/1.0.6/firebase.js"></script>
-    <script src='https://cdn.firebase.com/js/simple-login/1.3.0/firebase-simple-login.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"></script>
-    <script src="http://builds.emberjs.com.s3.amazonaws.com/beta/daily/20140325/ember.js"></script>
-    <script src="http://builds.emberjs.com.s3.amazonaws.com/beta/daily/20140219/ember-data.js"></script>
-    <script src="js/emberfire.min.js"></script>
-    <script src="js/app-testing.js"></script>
-    <script src="js/router.js"></script>
-    <script src="js/controllers/auth_controller.js"></script>
+      <div class="page-header">
+        <h1>Events</h1>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <ul class="list-group">
+              {{#each event in controller}}
+              <li class="list-group-item">
+                  {{#link-to "event" event}}
+                  {{event.date}}
+                  {{/link-to}}
+              </li>
+              {{/each}}
+              <br/>
+              {{#link-to 'events.create'}}<button type="submit" class="btn btn-primary" id="add-event">Add Event</button>{{/link-to}}
+          </ul>
+        </div>
+        <div class="col-sm-6">
+           {{outlet}}
+        </div>
+      </div>
+    </script>
+	
+    <script type="text/x-handlebars" data-template-name="reminder">
+        <ul class="events-listing">
+            {{#each event in controller}}
+            <li>
+                {{#link-to "event" event}}
+                {{event.type}} at {{event.place}}
+                {{/link-to}} is in 	{{event.days_left}} days
+            </li>
+            {{/each}}
+        </ul>
+    </script>	
+    <script type="text/x-handlebars" data-template-name="event">
+        <div class="event-profile">
+            <h2>{{type}} in {{place}}</h2>
+            {{outlet}}
+        </div>
+        <br/>
+        <button class="btn btn-default" {{action "edit"}} id="edit-btn">Edit</button>
+        <button class="btn btn-danger" {{action "delete"}} id="delet-btn">Delete</button>
+        {{#if deleteMode}}
+        <div class="confirm-box">
+            <h4>Really?</h4>
+            <button class="btn btn-default" {{action "cancelDelete"}} id="cancel-delete-btn">Cancel</button>
+            <button class="btn btn-danger" {{action "confirmDelete"}} id="confirm-delete-btn">Delete</button>
+        </div>
+        {{/if}}
+    </script>
+	
+	<script src="https://cdn.firebase.com/js/client/1.0.6/firebase.js"></script>
+	<script src='https://cdn.firebase.com/js/simple-login/1.3.0/firebase-simple-login.js'></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0/handlebars.min.js"></script>
+	<script src="http://builds.emberjs.com.s3.amazonaws.com/beta/daily/20140325/ember.js"></script>
+	<script src="http://builds.emberjs.com.s3.amazonaws.com/beta/daily/20140219/ember-data.js"></script>
+	<script src="js/emberfire.min.js"></script> 
+	<script src="js/app-testing.js"></script>
+	<script src="js/router.js"></script>
+	<script src="js/controllers/auth_controller.js"></script>
+	<script src="js/controllers/reminder_controller.js"></script>
+    <script src="js/controllers/events_controller.js"></script>
+    <script src="js/controllers/event_edit_controller.js"></script>
+    <script src="js/controllers/event_controller.js"></script>
+    <script src="js/controllers/events_create_controller.js"></script>
+    <script src="js/controllers/calendar_controller.js"></script>
     <script src="js/models/event.js"></script>
     <script src="js/models/user.js"></script>
     <script src="js/routes/auth_route.js"></script>
+    <script src="js/routes/reminder_route.js"></script>	
     <script src="js/routes/login_route.js"></script>
     <script src="js/routes/register_route.js"></script>
+	<script src="js/routes/events_route.js"></script>
+    <script src="js/routes/calendar_route.js"></script>
+    <script src="js/routes/event_edit_route.js"></script>
+    <script src="js/routes/event_route.js"></script>
+    <script src="js/routes/events_create_route.js"></script>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./js/bootstrap.min.js"></script>
   </body>
 </html>
