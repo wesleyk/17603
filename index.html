@@ -120,15 +120,22 @@
     </script>
 	
     <script type="text/x-handlebars" data-template-name="reminder">
-        <ul class="events-listing">
+        {{partial "navbar"}}
+
+        <div class="page-header">
+          <h1>Reminders</h1>
+        </div>
+        <div class="col-sm-6">
+          <ul class="list-group">
             {{#each event in controller}}
-            <li>
+            <li class="list-group-item">
                 {{#link-to "event" event}}
                 {{event.type}} at {{event.place}}
                 {{/link-to}} is in 	{{event.days_left}} days
             </li>
             {{/each}}
-        </ul>
+          </ul>
+        </div>
     </script>	
     <script type="text/x-handlebars" data-template-name="event">
         <div class="event-profile">
