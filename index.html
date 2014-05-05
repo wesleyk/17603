@@ -31,8 +31,10 @@
             <div class="navbar-collapse collapse">
               {{#if controllers.auth.currentUser.email}}
                 <div class="navbar-text navbar-right">
-                  Hello, {{controllers.auth.currentUser.email}}!
-                  <button class="btn btn-success" {{action logout target="controllers.auth"}}>Logout</button>
+                  Hello, {{controllers.auth.currentUser.email}}! |
+                  {{#link-to 'events'}}events{{/link-to}} |
+                  {{#link-to 'reminder'}}reminders{{/link-to}} |
+                  <a {{action logout target="controllers.auth"}}>logout</a>
                 </div>
               {{else}}
                 <form class="navbar-form navbar-right" role="form" {{action login on="submit"}}>
